@@ -1,4 +1,3 @@
 export class Transaction {
-    contractAddress: string;
-  }
-  
+  contractAddress: string;
+}

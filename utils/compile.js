@@ -16,25 +16,6 @@ async function compile(sourceCode, name) {
     name,
   );
 
-  // console.log('abi: ' + abi);
-  // console.log('bytecode: ' + bytecode);
-
-  // const readFuncNames = [];
-  // const writeFuncNames = [];
-
-  // abi.forEach((element) => {
-  //   if (element.type === 'function' && element.stateMutability === 'view') {
-  //     readFuncNames.push(element.name);
-  //   } else if (
-  //     element.type === 'function' &&
-  //     element.stateMutability !== 'view'
-  //   ) {
-  //     writeFuncNames.push(element.name);
-  //   }
-  // });
-
-  // console.log('Read functions:', readFuncNames);
-  // console.log('Write functions:', writeFuncNames);
   const abiString = JSON.stringify(abi);
   return { abiString, bytecode, sourceCode };
 }
@@ -71,11 +52,7 @@ async function compileSources(config, zeppelinPath, contractFileName, name) {
 
     errorHandling(output);
 
-    // console.log(output.contracts);
-    // console.log('-----------------------------------');
     const artifact = output.contracts[contractFileName][name];
-    // console.log('artifact:  ', artifact);
-    // console.log('-----------------------------------');
     return {
       abi: artifact.abi,
       bytecode: artifact.evm.bytecode.object,
@@ -89,7 +66,6 @@ function getImportCallback(zeppelinPath) {
   return (path) => {
     let contents;
     if (path.startsWith('@openzeppelin/')) {
-      // console.log(path);
       const filePath = zeppelinPath + path.replace('@openzeppelin/', '');
       contents = fs.readFileSync(filePath, 'utf8');
     } else {
